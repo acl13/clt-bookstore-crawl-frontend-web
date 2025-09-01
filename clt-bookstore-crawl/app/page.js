@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { fetchBookstores } from "./store/slices/bookstoreData";
 import { Map } from "@vis.gl/react-google-maps";
 import CustomMarker from "./components/CustomMarker";
+import Link from "next/link";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -91,6 +92,7 @@ export default function Home() {
       const data = await res.json();
       if (data.token) {
         localStorage.setItem("token", data.token);
+        fetchUserInfo();
         alert("Login successful!");
       } else {
         alert(data.message || "Login failed");
@@ -111,6 +113,12 @@ export default function Home() {
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // clear the token
+    alert("You have been logged out.");
+    window.location.href = "/"; // redirect to home (or "/login")
   };
 
   const saveOptimizedRoute = async () => {
@@ -144,6 +152,10 @@ export default function Home() {
       (bookstore) => bookstore._id
     );
     console.log(selectedBookstoreIds);
+  };
+
+  const logUserInfo = () => {
+    console.log(userInfo);
   };
 
   return (
@@ -265,7 +277,7 @@ export default function Home() {
       </section>
 
       {/* Fetch user info */}
-      <section className="container m-4">
+      {/* <section className="container m-4">
         <button onClick={fetchUserInfo} className="button">
           Get My Info (/me)
         </button>
@@ -274,7 +286,20 @@ export default function Home() {
             {JSON.stringify(userInfo, null, 2)}
           </pre>
         )}
-      </section>
+      </section> */}
+      {userInfo && (
+        <section className="container m-4">
+          <Link href={`/users/${userInfo.id}`}>
+            <button type="button" className="button" onClick={logUserInfo}>
+              Get My Info (/me)
+            </button>
+          </Link>
+        </section>
+      )}
+      {/* Logout Button */}
+      <button className="button is-danger mt-4" onClick={handleLogout}>
+        Log Out
+      </button>
     </main>
   );
 }
