@@ -159,147 +159,186 @@ export default function Home() {
   };
 
   return (
-    <main className="has-background-light has-text-dark">
-      <section className="container m-4">
-        <Map
-          style={{ width: "60vw", height: "60vh" }}
-          defaultCenter={{ lat: 35.2271, lng: -80.8431 }}
-          defaultZoom={8}
-          gestureHandling={"greedy"}
-          disableDefaultUI={true}
-          mapId="94a3f9788eb55066aff42e8e"
-        >
-          {bookstores &&
-            bookstores.map((bookstore) => (
+    <main className="py-5">
+      {/* Map Section */}
+      <section className="container box p-5 mb-5">
+        <h1 className="title is-3 has-text-centered mb-4">Bookstore Map</h1>
+        <div className="is-flex is-justify-content-center">
+          <Map
+            style={{ width: "60vw", height: "60vh", borderRadius: "8px" }}
+            defaultCenter={{ lat: 35.2271, lng: -80.8431 }}
+            defaultZoom={8}
+            gestureHandling="greedy"
+            disableDefaultUI={true}
+            mapId="94a3f9788eb55066aff42e8e"
+          >
+            {bookstores?.map((bookstore) => (
               <CustomMarker key={bookstore._id} bookstore={bookstore} />
             ))}
-        </Map>
+          </Map>
+        </div>
       </section>
 
-      <section className="container m-4">
-        <div className="grid">
-          {bookstores &&
-            bookstores.map((bookstore) => (
+      {/* Bookstore List Section */}
+      <section className="container box p-5 mb-5">
+        <h2 className="title is-4 mb-4">Available Bookstores</h2>
+        <div className="columns is-multiline">
+          {bookstores?.map((bookstore) => (
+            <div key={bookstore._id} className="column is-one-quarter">
               <button
-                className="cell bookstore-card"
-                key={bookstore._id}
+                className="button is-fullwidth is-info is-outlined"
                 onClick={() => selectBookstore(bookstore)}
               >
                 {bookstore.name}
               </button>
-            ))}
-        </div>
-        <div>
-          <h1 className="is-size-3 has-text-weight-bold">
-            Selected bookstores:
-          </h1>
-          {selectedBookstores.map((bookstore) => (
-            <div key={bookstore._id}>{bookstore.name}</div>
+            </div>
           ))}
-          <button
-            type="button"
-            className="button"
-            onClick={logSelectedBookstores}
-          >
-            Log Selected Bookstores
-          </button>
         </div>
-        <div>
-          <h1 className="is-size-3 has-text-weight-bold">
-            Optimized Route - does not include initial bookstore:
-          </h1>
-          {Array.isArray(
-            routeData?.routes?.[0]?.optimizedIntermediateWaypointIndex
-          ) &&
-            routeData.routes[0].optimizedIntermediateWaypointIndex.map(
-              (index) => (
-                <div key={index}>{selectedBookstores[index + 1].name}</div>
-              )
-            )}
+
+        <div className="mt-5">
+          <h3 className="subtitle is-5 has-text-weight-bold mb-2">
+            Selected Bookstores:
+          </h3>
+          <div className="content">
+            {selectedBookstores.map((bookstore) => (
+              <span
+                key={bookstore._id}
+                className="tag is-link is-light is-medium m-1"
+              >
+                {bookstore.name}
+              </span>
+            ))}
+          </div>
+
+          <div className="buttons mt-4">
+            <button
+              className="button is-primary"
+              onClick={logSelectedBookstores}
+            >
+              Log Selected
+            </button>
+            <button className="button is-warning" onClick={getOptimizedRoute}>
+              Get Optimized Route
+            </button>
+            <button className="button is-success" onClick={saveOptimizedRoute}>
+              Save to Account
+              {/* TODO: Add error handling if user is not logged in */}
+            </button>
+            <button className="button is-light" onClick={logBookstores}>
+              Log All Bookstores
+            </button>
+          </div>
         </div>
-        <button type="button" className="button" onClick={logBookstores}>
-          Log Bookstores
-        </button>
-        <button type="button" className="button" onClick={getOptimizedRoute}>
-          Get Optimized Route
-        </button>
-        <button type="button" className="button" onClick={saveOptimizedRoute}>
-          Save Optimized Route to Account
-        </button>
-      </section>
 
-      {/* Signup Form */}
-      <section className="container m-4">
-        <h2 className="is-size-4">Sign Up</h2>
-        <form onSubmit={handleSignup}>
-          <input
-            type="email"
-            placeholder="Email"
-            value={signupEmail}
-            onChange={(e) => setSignupEmail(e.target.value)}
-            required
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={signupPassword}
-            onChange={(e) => setSignupPassword(e.target.value)}
-            required
-          />
-          <button type="submit" className="button">
-            Sign Up
-          </button>
-        </form>
-      </section>
-
-      {/* Login Form */}
-      <section className="container m-4">
-        <h2 className="is-size-4">Log In</h2>
-        <form onSubmit={handleLogin}>
-          <input
-            type="email"
-            placeholder="Email"
-            value={loginEmail}
-            onChange={(e) => setLoginEmail(e.target.value)}
-            required
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={loginPassword}
-            onChange={(e) => setLoginPassword(e.target.value)}
-            required
-          />
-          <button type="submit" className="button">
-            Log In
-          </button>
-        </form>
-      </section>
-
-      {/* Fetch user info */}
-      {/* <section className="container m-4">
-        <button onClick={fetchUserInfo} className="button">
-          Get My Info (/me)
-        </button>
-        {userInfo && (
-          <pre style={{ background: "#f4f4f4", padding: "1rem" }}>
-            {JSON.stringify(userInfo, null, 2)}
-          </pre>
+        {routeData?.routes?.[0]?.optimizedIntermediateWaypointIndex && (
+          <div className="mt-5">
+            <h3 className="subtitle is-5 has-text-weight-bold">
+              Optimized Route (excluding first):
+            </h3>
+            <ol className="ml-5">
+              {routeData.routes[0].optimizedIntermediateWaypointIndex.map(
+                (index) => (
+                  <li key={index}>{selectedBookstores[index + 1].name}</li>
+                )
+              )}
+            </ol>
+          </div>
         )}
-      </section> */}
+      </section>
+
+      {/* Auth Forms */}
+      <section className="container columns">
+        <div className="column">
+          <div className="box p-5">
+            <h2 className="title is-4 mb-4">Sign Up</h2>
+            <form onSubmit={handleSignup}>
+              <div className="field">
+                <div className="control">
+                  <input
+                    className="input"
+                    type="email"
+                    placeholder="Email"
+                    value={signupEmail}
+                    onChange={(e) => setSignupEmail(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="field">
+                <div className="control">
+                  <input
+                    className="input"
+                    type="password"
+                    placeholder="Password"
+                    value={signupPassword}
+                    onChange={(e) => setSignupPassword(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+              <button type="submit" className="button is-primary is-fullwidth">
+                Sign Up
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <div className="column">
+          <div className="box p-5">
+            <h2 className="title is-4 mb-4">Log In</h2>
+            <form onSubmit={handleLogin}>
+              <div className="field">
+                <div className="control">
+                  <input
+                    className="input"
+                    type="email"
+                    placeholder="Email"
+                    value={loginEmail}
+                    onChange={(e) => setLoginEmail(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="field">
+                <div className="control">
+                  <input
+                    className="input"
+                    type="password"
+                    placeholder="Password"
+                    value={loginPassword}
+                    onChange={(e) => setLoginPassword(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+              <button type="submit" className="button is-link is-fullwidth">
+                Log In
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      {/* User Info and Logout */}
       {userInfo && (
-        <section className="container m-4">
+        <section className="container has-text-centered mt-5">
           <Link href={`/users/${userInfo.id}`}>
-            <button type="button" className="button" onClick={logUserInfo}>
-              Get My Info (/me)
+            <button
+              type="button"
+              className="button is-info is-light mx-2"
+              onClick={logUserInfo}
+            >
+              Get My Info
             </button>
           </Link>
         </section>
       )}
-      {/* Logout Button */}
-      <button className="button is-danger mt-4" onClick={handleLogout}>
-        Log Out
-      </button>
+
+      <div className="has-text-centered mt-5">
+        <button className="button is-danger" onClick={handleLogout}>
+          Log Out
+        </button>
+      </div>
     </main>
   );
 }
