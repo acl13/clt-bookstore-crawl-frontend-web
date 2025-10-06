@@ -163,6 +163,9 @@ export default function Home() {
       {/* Map Section */}
       <section className="container box p-5 mb-5">
         <h1 className="title is-3 has-text-centered mb-4">Bookstore Map</h1>
+        <h3 className="has-text-centered is-4 mb-4">
+          Click on Red Markers to View Bookstores
+        </h3>
         <div className="is-flex is-justify-content-center">
           <Map
             style={{ width: "60vw", height: "60vh", borderRadius: "8px" }}
@@ -181,7 +184,12 @@ export default function Home() {
 
       {/* Bookstore List Section */}
       <section className="container box p-5 mb-5">
-        <h2 className="title is-4 mb-4">Available Bookstores</h2>
+        <h2 className="title is-4 mb-4">
+          Choose Which Bookstores You Would Like To Visit:
+        </h2>
+        <h3 className="is-4 mb-4">
+          Note: The First Bookstore You Select Will Be Your Starting Point
+        </h3>
         <div className="columns is-multiline">
           {bookstores?.map((bookstore) => (
             <div key={bookstore._id} className="column is-one-quarter">
@@ -233,9 +241,10 @@ export default function Home() {
         {routeData?.routes?.[0]?.optimizedIntermediateWaypointIndex && (
           <div className="mt-5">
             <h3 className="subtitle is-5 has-text-weight-bold">
-              Optimized Route (excluding first):
+              Optimized Route:
             </h3>
             <ol className="ml-5">
+              <li>{selectedBookstores[0].name}</li>
               {routeData.routes[0].optimizedIntermediateWaypointIndex.map(
                 (index) => (
                   <li key={index}>{selectedBookstores[index + 1].name}</li>
