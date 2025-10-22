@@ -2,7 +2,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const fetchBookstores = createAsyncThunk("fetchBookstores", async () => {
-  const response = await axios.get(`http://localhost:8000/bookstores`);
+  const response = await axios.get(
+    `https://clt-bookstore-crawl-backend.onrender.com/bookstores`
+  );
   return response.data;
 });
 
