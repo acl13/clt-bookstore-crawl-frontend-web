@@ -27,9 +27,6 @@ export default function UserInfoPage() {
       {userInfo ? (
         <div className="box">
           <p>
-            <strong>ID:</strong> {userInfo.id}
-          </p>
-          <p>
             <strong>Email:</strong> {userInfo.email}
           </p>
 
