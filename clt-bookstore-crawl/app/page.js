@@ -307,11 +307,7 @@ export default function Home() {
       {userInfo && (
         <section className="container has-text-centered mt-5">
           <Link href={`/users/${userInfo.id}`}>
-            <button
-              type="button"
-              className="button is-info is-light mx-2"
-              onClick={logUserInfo}
-            >
+            <button type="button" className="button is-info is-light mx-2">
               Get My Info
             </button>
           </Link>
