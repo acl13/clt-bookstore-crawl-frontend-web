@@ -25,10 +25,6 @@ export default function Home() {
     dispatch(fetchBookstores());
   }, [dispatch]);
 
-  const logBookstores = () => {
-    console.log(bookstores);
-  };
-
   const selectBookstore = (bookstore) => {
     if (!selectedBookstores.includes(bookstore)) {
       setSelectedBookstores((prev) => [...prev, bookstore]);
@@ -146,18 +142,6 @@ export default function Home() {
     }
   };
 
-  const logSelectedBookstores = () => {
-    console.log(selectedBookstores);
-    const selectedBookstoreIds = selectedBookstores.map(
-      (bookstore) => bookstore._id
-    );
-    console.log(selectedBookstoreIds);
-  };
-
-  const logUserInfo = () => {
-    console.log(userInfo);
-  };
-
   return (
     <main className="py-5">
       {/* Map Section */}
@@ -219,21 +203,12 @@ export default function Home() {
           </div>
 
           <div className="buttons mt-4">
-            <button
-              className="button is-primary"
-              onClick={logSelectedBookstores}
-            >
-              Log Selected
-            </button>
             <button className="button is-warning" onClick={getOptimizedRoute}>
               Get Optimized Route
             </button>
             <button className="button is-success" onClick={saveOptimizedRoute}>
               Save to Account
               {/* TODO: Add error handling if user is not logged in */}
-            </button>
-            <button className="button is-light" onClick={logBookstores}>
-              Log All Bookstores
             </button>
           </div>
         </div>
