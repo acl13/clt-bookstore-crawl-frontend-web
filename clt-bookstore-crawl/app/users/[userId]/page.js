@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 export default function UserInfoPage() {
   const [userInfo, setUserInfo] = useState(null);
-  const API_URL = "http://localhost:8000";
+  const API_URL = "https://clt-bookstore-crawl-backend.onrender.com";
 
   useEffect(() => {
     const fetchUserInfo = async () => {
