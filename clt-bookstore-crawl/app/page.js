@@ -19,7 +19,7 @@ export default function Home() {
   const [loginPassword, setLoginPassword] = useState("");
   const [userInfo, setUserInfo] = useState(null);
 
-  const API_URL = "https://clt-bookstore-crawl-backend.onrender.com/";
+  const API_URL = "https://clt-bookstore-crawl-backend.onrender.com";
 
   useEffect(() => {
     dispatch(fetchBookstores());
