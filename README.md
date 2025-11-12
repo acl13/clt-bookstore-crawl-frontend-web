@@ -1,5 +1,3 @@
-# clt-bookstore-crawl-frontend-web
-
 # CLT Bookstore Crawl Optimizer — Frontend
 
 A React-based web application that helps users plan and optimize their route for a bookstore crawl event.
@@ -8,14 +6,14 @@ A React-based web application that helps users plan and optimize their route for
 
 ## Tech Stack
 
-| Category                                                                | Technology                  |
-| ----------------------------------------------------------------------- | --------------------------- |
-| Frontend Framework                                                      | React                       |
-| State Management                                                        | Redux Toolkit               |
-| API Integration                                                         | Axios                       |
-| Maps & Routing                                                          | Google Maps JavaScript API  |
-| Authentication                                                          | JSON Web Tokens (JWT)       |
-| Backend [linked repo](https://clt-bookstore-crawl-backend.onrender.com) | Node.js / Express / MongoDB |
+| Category                                                    | Technology                  |
+| ----------------------------------------------------------- | --------------------------- |
+| Frontend Framework                                          | React                       |
+| State Management                                            | Redux Toolkit               |
+| API Integration                                             | Axios                       |
+| Maps & Routing                                              | Google Maps JavaScript API  |
+| Authentication                                              | JSON Web Tokens (JWT)       |
+| [Backend](https://clt-bookstore-crawl-backend.onrender.com) | Node.js / Express / MongoDB |
 
 ---
 
