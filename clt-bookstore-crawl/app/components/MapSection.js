@@ -2,8 +2,12 @@
 import { Map } from "@vis.gl/react-google-maps";
 import CustomMarker from "./CustomMarker";
 
-export default function MapSection({ bookstores }) {
-  return (
+export default function MapSection({ bookstores, isLoading }) {
+  return isLoading ? (
+    <>
+      <h1 className="title is-3 has-text-centered mb-4">Loading...</h1>
+    </>
+  ) : (
     <section className="container box p-5 mb-5">
       <h1 className="title is-3 has-text-centered mb-4">Bookstore Map</h1>
       <h3 className="has-text-centered is-4 mb-4">

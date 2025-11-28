@@ -13,6 +13,7 @@ import UserInfo from "./components/UserInfo";
 export default function Home() {
   const dispatch = useDispatch();
   const bookstores = useSelector((state) => state.bookstores.data);
+  const isLoading = useSelector((state) => state.bookstores.isLoading);
   const [selectedBookstores, setSelectedBookstores] = useState([]);
   const [routeData, setRouteData] = useState({});
   const [userInfo, setUserInfo] = useState(null);
@@ -73,7 +74,7 @@ export default function Home() {
 
   return (
     <main className="py-5">
-      <MapSection bookstores={bookstores} />
+      <MapSection bookstores={bookstores} isLoading={isLoading} />
       <BookstoreList
         bookstores={bookstores}
         selectedBookstores={selectedBookstores}
